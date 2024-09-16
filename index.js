@@ -3,7 +3,7 @@ const application = require('./application');
 
 const desiredPORT = 3000 ?? process.env.PORT
 
-mongoose.connect('mongodb://127.0.0.1:27017/inmoconnect', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost:27017/inmoconnect', { useNewUrlParser: true })
     .then(
         () => {
             console.log(`Connect to database successfully`),

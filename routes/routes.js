@@ -11,7 +11,9 @@ const routes = express.Router();
 routes.get('/', homepageController.homepage);
 
 // Profile page
-routes.get('/profile', profilePageController.profilePage)
+routes.get('/profile/:_id', 
+    token.validarToken,
+    profilePageController.profileUser)
 
 // Users
 routes.get('/register', users.register);
