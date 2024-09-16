@@ -11,7 +11,10 @@ function profileUser(req, res) {
     .then(
         (usuarioEncontrado) => {
             res.status(200)
-            .json(usuarioEncontrado)
+            .send({
+                message: "Usuario encontrado", 
+                usuario: usuarioEncontrado
+            });
         },
         err => {
             res.status(404)
