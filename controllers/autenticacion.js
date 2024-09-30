@@ -1,6 +1,6 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const token = require('../helpers/autenticacion');
-const Usuario = require('../models/usuario');
+const Usuario = require('../models/usuarios');
 
 function registrarUsuario(req, res) {
     const { nombre, apellido, email, password, rol } = req.body
@@ -16,43 +16,43 @@ function registrarUsuario(req, res) {
     usuario.rol = rol;
 
     Usuario.save()
-    .then(
-        (usuarioGuardado) => {
-            res.status(200)
-            .send({usuario: usuarioGuardado});
-        },
-        err => {
-            res.status(500)
-            .send({message: "Error al intentar crear el usuario"});
-        }
-    )
+        .then(
+            (usuarioGuardado) => {
+                res.status(200)
+                    .send({ usuario: usuarioGuardado });
+            },
+            err => {
+                res.status(500)
+                    .send({ message: "Error al intentar crear el usuario" });
+            }
+        )
 }
 
 
 function iniciarSesion(req, res) {
     const { email, password } = req.body;
 
-    Usuario.findOne({email: email})
-    .then(
-        (usuarioEncontrado) => {
-            if(!usuarioEncontrado){
-                res.status(404)
-                .send({message: "El usuario no existe"})
-            } else {
-                if(bcrypt.compareSync(password, usuarioEncontrado.password)){
-                    res.status(200)
-                    .send({
-                        message: "Inicio de sesion con exito",
-                        token: token.generarToken(usuarioEncontrado)
-                    })
+    Usuario.findOne({ email: email })
+        .then(
+            (usuarioEncontrado) => {
+                if (!usuarioEncontrado) {
+                    res.status(404)
+                        .send({ message: "El usuario no existe" })
+                } else {
+                    if (bcrypt.compareSync(password, usuarioEncontrado.password)) {
+                        res.status(200)
+                            .send({
+                                message: "Inicio de sesion con exito",
+                                token: token.generarToken(usuarioEncontrado)
+                            })
+                    }
                 }
+            },
+            err => {
+                res.status(500)
+                    .send({ message: "Error al buscar usuario" })
             }
-        },
-        err => {
-            res.status(500)
-            .send({message: "Error al buscar usuario"})
-        }
-    )
+        )
 }
 
 module.exports = {

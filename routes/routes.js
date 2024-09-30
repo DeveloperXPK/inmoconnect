@@ -1,17 +1,18 @@
 const express = require('express');
+const routes = express.Router();
 
 //Controladores
 const homepageController = require('../controllers/homepage');
 const profilePageController = require('../controllers/profile');
-const users = require('../controllers/autenticacion');
+const token = require('../helpers/autenticacion');
+const autenticacion = require('../controllers/autenticacion');
 
-const routes = express.Router();
 
 // Homepage
 routes.get('/', homepageController.homepage);
 
 // Profile page
-routes.get('/profile/:_id', 
+routes.get('/profile/:_id',
     token.validarToken,
     profilePageController.profileUser
 );
