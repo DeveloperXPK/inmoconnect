@@ -1,5 +1,5 @@
-const moment = require('moment');
-const jwt = require('jwt-simple');
+const moment = require('moment'); // Importamos moment para manejar las fechas
+const jwt = require('jwt-simple'); // Importamos jwt para manejar los tokens
 
 // Clave secreta para encriptar el token
 const SECRET = 'asdfhklsJASCKBILM2345../asdav';
