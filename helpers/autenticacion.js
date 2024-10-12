@@ -75,7 +75,7 @@ function validarPermiso(rolesPermitidos){
 }
 
 // Exportar las funciones
-molude.exports = {
+module.exports = {
     generarToken,
     validarToken,
     validarPermiso

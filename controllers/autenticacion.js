@@ -1,6 +1,6 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const token = require('../helpers/autenticacion');
-const Usuario = require('../models/usuario');
+const Usuario = require('../models/usuarios');
 
 function registrarUsuario(req, res) {
     const { nombre, apellido, email, password, rol } = req.body
@@ -15,7 +15,7 @@ function registrarUsuario(req, res) {
     usuario.password = passwordHash;
     usuario.rol = rol;
 
-    Usuario.save()
+    usuario.save()
     .then(
         (usuarioGuardado) => {
             res.status(200)
