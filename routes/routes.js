@@ -1,4 +1,5 @@
-const express = require('express');
+const express = require('express'); // Importamos express para crear las rutas
+const routes = express.Router(); // Creamos un router para las rutas
 
 //Controladores
 const homepageController = require('../controllers/homepage');
@@ -7,16 +8,15 @@ const autenticacionController = require('../controllers/autenticacion');
 const publicacionesController = require('../controllers/publicaciones');
 const token = require('../helpers/autenticacion');
 
-const routes = express.Router();
 
 // Homepage
-routes.get('/', homepageController.homepage);
+routes.get('/', homepageController.homepage); // Ruta para la pagina de inicio
 
 // Profile page
-routes.get('/profile/:_id', 
+routes.get('/profile/:_id',
     token.validarToken,
     profilePageController.profileUser
-);
+); // Ruta para la pagina de perfil
 
 // Publicaciones
 routes.post('/publicaciones', 
@@ -50,4 +50,4 @@ routes.get('/publicaciones',
 routes.get('/register', autenticacionController.registrarUsuario);
 routes.get('/login', autenticacionController.iniciarSesion);
 
-module.exports = routes;
+module.exports = routes; // Exportamos las rutas

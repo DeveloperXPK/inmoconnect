@@ -1,12 +1,12 @@
-const moment = require('moment');
-const jwt = require('jwt-simple');
+const moment = require('moment'); // Importamos moment para manejar las fechas
+const jwt = require('jwt-simple'); // Importamos jwt para manejar los tokens
 
 // Clave secreta para encriptar el token
 const SECRET = 'asdfhklsJASCKBILM2345../asdav';
 
 
 // Función para generar un token
-function generarToken(usuario){
+function generarToken(usuario) {
 
     // Crear el payload del token que es la información que se va a encriptar
     const payload = {
@@ -24,10 +24,10 @@ function generarToken(usuario){
 
 
 // Función para validar el token
-function validarToken(req, res, next){
+function validarToken(req, res, next) {
 
     // Manejar el error si no se envía el token
-    try{
+    try {
 
         /*
         Verificar si se envía el token en los headers y extraerlo de la cabecera
@@ -40,28 +40,28 @@ function validarToken(req, res, next){
         const payload = jwt.decode(token, SECRET);
 
         // Guardar el id del usuario en el header
-        req.header.UserId = payload.sub; 
+        req.header.UserId = payload.sub;
 
         // Guardar el rol del usuario en el header
-        req.header.UserRol = payload.rol; 
+        req.header.UserRol = payload.rol;
 
         next(); // Continuar con la petición
 
     } catch (error) {
         // Manejar el error si el token no es válido
         res.status(403)
-        .send({message: 'No se pudo iniciar sesión'});
+            .send({ message: 'No se pudo iniciar sesión' });
     }
 }
 
 
 // Función para validar los permisos
-function validarPermiso(rolesPermitidos){
+function validarPermiso(rolesPermitidos) {
     // Devolver una función que se ejecutará en la ruta
     return (req, res, next) => {
 
         // Verificar si el rol del usuario está en los roles permitidos
-        if(rolesPermitidos.includes(req.header.UserRol)){
+        if (rolesPermitidos.includes(req.header.UserRol)) {
 
             // Continuar con la petición
             next();
@@ -69,7 +69,7 @@ function validarPermiso(rolesPermitidos){
         } else {
             // Manejar el error si el usuario no tiene permiso para realizar la acción
             res.status(403)
-            .send({message: 'No tienes permiso para realizar esta acción'});
+                .send({ message: 'No tienes permiso para realizar esta acción' });
         }
     }
 }
